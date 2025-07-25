@@ -1,12 +1,19 @@
-import { useState } from "react";
-import PhoneInput from "./components/PhoneInput";
+// import { useState } from "react";
+// import PhoneInput from "./components/PhoneInput";
+import CurrencyInput from "./components/CurrencyInput";
 
 const App = () => {
-  const [phone, setPhone] = useState("");
+  // const [phone, setPhone] = useState("");
 
   return (
     <>
-    <div className="p-4 max-w-md mx-auto space-y-4">
+     <div className="p-4 max-w-sm mx-auto w-[500px]">
+          <CurrencyInput placeholder="Enter price" />
+
+     </div>
+
+    {/* <div className="p-4 max-w-md mx-auto space-y-4">
+
       <PhoneInput
         showFlags={true}
         defaultCountry="PK" // make sure this code matches allowedCountries
@@ -21,7 +28,7 @@ const App = () => {
       />
 
       <p className="text-sm text-gray-600">Phone: {phone}</p>
-    </div>
+    </div> */}
     </>
   );
 };
