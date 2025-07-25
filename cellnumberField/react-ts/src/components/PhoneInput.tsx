@@ -79,45 +79,65 @@ allowedCountries,
     setNumber("");
     onChange(""); 
   };
+const [dropdownOpen, setDropdownOpen] = useState(false);
 
   return (
     <>
     
     <div
-      className={`flex items-center border border-gray-300 rounded-md px-2 ${heightClass} ${
+      className={`flex items-center border border-gray-300 rounded-md px-4 ${heightClass} ${
         fullWidth ? "w-full" : ""
       } ${className}`}
     >
+      
       <div className="flex items-center">
-        {showFlags && (
-            <img
-            src={selectedCountry.flag}
-            alt={selectedCountry.code}
-            className="w-5 h-4 mr-1"
-            />
-        )}
-        <select
-            value={selectedCountry.code}
-            onChange={(e) => handleCountryChange(e.target.value)}
-            className="outline-none bg-transparent pr-2 text-sm"
-        >
-            {countryList.map((country) => (
-            <option key={country.code} value={country.code}>
-                {country.dialCode}
-            </option>
-            ))}
-        </select>
+      <div className="relative">
+          <div
+            className="flex items-center cursor-pointer"
+            onClick={() => setDropdownOpen(!dropdownOpen)}
+          >
+            {showFlags && (
+              <img src={selectedCountry.flag} alt={selectedCountry.code} className="w-5 h-4 mr-2" />
+            )}
+            <span className="text-sm">{selectedCountry.dialCode}</span>
+            <span className="text-gray-500 text-sm ml-2">
+          {dropdownOpen ? "▲" : "▼"}
+        </span>
+          </div>
+           
+          {dropdownOpen && (
+            <ul className="absolute z-10 bg-white border border-gray-300 rounded mt-2 w-17 ml-[-8px] max-h-40 overflow-y-auto">
+              {countryList.map((country) => (
+                <li
+                  key={country.code}
+                  className="flex items-center px-2 py-1 cursor-pointer hover:bg-gray-100"
+                  onClick={() => {
+                    handleCountryChange(country.code);
+                    setDropdownOpen(false);
+                  }}
+                >
+                  {showFlags && (
+                    <img src={country.flag} alt={country.code} className="w-5 h-4 mr-2" />
+                  )}
+                  <span className="text-sm">{country.dialCode}</span>
+                </li>
+              ))}
+            </ul>
+          )}
+            </div>
         </div>
+<>
+<p></p>
+</>
 
-
-      <span className="mx-1">|</span>
+      {/* <span className="mx-1">|</span> */}
       <input
         type="text"
         placeholder="Enter phone number"
         value={number}
         maxLength={Math.max(...selectedCountry.validLength) + 2} // +2 for dashes if needed
         onChange={(e) => handleInputChange(e.target.value)}
-        className="flex-1 bg-transparent outline-none text-sm"
+        className="flex-1 bg-transparent outline-none text-sm px-4"
       />
     </div>
     {error && <p className="text-sm text-red-500">{error}</p>}
